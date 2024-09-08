@@ -1,0 +1,122 @@
+//Waiting examples
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+public class WaitForXHRRequests {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        driver.get("https://your-react-page.com");
+
+        // Wait for all XHR requests to complete
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(driver1 -> (Boolean) js.executeScript(
+                "return window.performance.getEntriesByType('resource')" +
+                        ".filter(e => e.initiatorType === 'xmlhttprequest').length === 0"));
+
+        System.out.println("All XHR requests have completed. The page is likely loaded!");
+
+        driver.quit();
+    }
+}
+
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+public class WaitForReactReady {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        driver.get("https://your-react-page.com");
+
+        // Wait for React to be fully loaded by checking some global React-ready variable
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(driver1 -> (Boolean) js.executeScript("return window.__REACT_DEVTOOLS_GLOBAL_HOOK__ != null"));
+
+        System.out.println("React is ready.");
+
+        driver.quit();
+    }
+}
+
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+public class WaitForDOMReady {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        driver.get("https://your-react-page.com");
+
+        // Wait for the document to reach the readyState of "complete"
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        wait.until(driver1 -> js.executeScript("return document.readyState").equals("complete"));
+
+        System.out.println("DOM is ready, though React may still be rendering.");
+
+        driver.quit();
+    }
+}
+
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+public class WaitForSpinnerToDisappear {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+
+        driver.get("https://your-react-page.com");
+
+        // Wait for a spinner or loader to disappear (by class name, for example)
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("spinner-class")));
+
+        System.out.println("Loading spinner is gone, page loaded!");
+
+        driver.quit();
+    }
+}
+
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+public class WaitForCustomReactFlag {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        driver.get("https://your-react-page.com");
+
+        // Custom waiting logic for some global React-ready flag or state
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(driver1 -> (Boolean) js.executeScript("return window.someGlobalReactFlag == true"));
+
+        System.out.println("React has finished rendering!");
+
+        driver.quit();
+    }
+}
